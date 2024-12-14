@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const imageController = require("../controllers/images"); // Correctly import the imageController
+const imageController = require("../controllers/images");
 
 const router = express.Router();
 
@@ -18,10 +18,14 @@ const fileFilter = (req, file, cb) => {
   }
 };
 const upload = multer({ storage, fileFilter });
+
 // Image upload route
 router.post("/upload", upload.single("image"), imageController.uploadImage);
 
-router.get("/all", imageController.getAllImages);
+// Get image by ID route
 router.get("/:id", imageController.getImageById);
+
+// Get all images route
+router.get("/", imageController.getAllImages);
 
 module.exports = router;

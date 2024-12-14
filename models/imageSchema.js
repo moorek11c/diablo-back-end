@@ -4,18 +4,8 @@ const { Schema } = mongoose;
 
 // Define the image schema
 const imageSchema = new Schema({
-  image_name: {
-    type: String,
-    required: true,
-  },
-  image_data: {
-    type: Buffer,
-    required: true,
-  },
-  upload_date: {
-    type: Date,
-    default: Date.now,
-  },
+  data: Buffer,
+  contentType: String,
 });
 
 // Create the model
