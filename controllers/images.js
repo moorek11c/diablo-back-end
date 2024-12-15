@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Image = require("../models/imageSchema");
 
 exports.uploadImage = async (req, res) => {
@@ -13,6 +14,8 @@ exports.uploadImage = async (req, res) => {
 
   try {
     const savedImage = await newImage.save();
+    console.log("Image saved:", savedImage);
+
     res.send({
       message: "Image uploaded successfully",
       imageId: savedImage._id,
@@ -25,7 +28,8 @@ exports.uploadImage = async (req, res) => {
 
 exports.getImageById = async (req, res) => {
   try {
-    const image = await Image.findById(req.params.id);
+    const imageId = new mongoose.Types.ObjectId(req.params.id);
+    const image = await Image.findById(imageId);
     if (!image) {
       return res.status(404).send("Image not found");
     }
@@ -45,5 +49,19 @@ exports.getAllImages = async (req, res) => {
   } catch (err) {
     console.error("Error fetching images:", err);
     res.status(500).send({ message: "Error fetching images" });
+  }
+};
+
+exports.deleteImageById = async (req, res) => {
+  try {
+    const imageId = new mongoose.Types.ObjectId(req.params.id);
+    const result = await Image.deleteOne({ _id: imageId });
+    if (result.deletedCount === 0) {
+      return res.status(404).send("Image not found");
+    }
+    res.send({ message: "Image deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting image:", err);
+    res.status(500).send({ message: "Error deleting image" });
   }
 };

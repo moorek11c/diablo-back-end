@@ -28,4 +28,7 @@ router.get("/:id", imageController.getImageById);
 // Get all images route
 router.get("/", imageController.getAllImages);
 
+// Delete image by ID route
+router.delete("/:id", imageController.deleteImageById);
+
 module.exports = router;
