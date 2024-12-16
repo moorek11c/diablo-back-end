@@ -3,12 +3,16 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const indexRouter = require("./routes/index");
 
 // Create an Express app
 
 const app = express();
 
-const indexRouter = require("./routes/index");
+const corsOptions = {
+  origin: "http://localhost:3000", // URL of the React app front end domain
+  credentials: true,
+};
 
 // Connect to MongoDB
 mongoose
@@ -21,7 +25,7 @@ mongoose
 
 // Middleware for JSON parsing
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Routes
 app.use("/", indexRouter);

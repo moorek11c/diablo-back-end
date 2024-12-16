@@ -3,6 +3,7 @@ const reviewsRouter = require("./reviews");
 const formRouter = require("./fileRoutes");
 const quoteForm = require("./formRoutes");
 const authRouter = require("./authRoutes");
+const authMiddleware = require("../middleware/authMiddleware");
 
 // Use the reviews router
 router.use("/reviews", reviewsRouter);
@@ -12,5 +13,7 @@ router.use("/images", formRouter);
 router.use("/api", quoteForm);
 
 router.use("/api/auth", authRouter);
+
+router.use("/api/protected", authMiddleware, authRouter);
 
 module.exports = router;
