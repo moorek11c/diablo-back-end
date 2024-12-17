@@ -1,22 +1,23 @@
 const nodemailer = require("nodemailer");
+const { CustomError, ERROR_MESSAGES, ERROR_CODES } = require("../utils/errors");
 
-const sendFormEmail = async (req, res) => {
+const sendQuoteEmail = async (req, res, next) => {
   const { firstName, lastName, email, phoneNumber, city, state, details } =
     req.body;
 
   // Create a transporter object using SMTP transport
   const transporter = nodemailer.createTransport({
-    service: "gmail", // Use your email service
+    service: process.env.ADMIN_EMAIL_SERVICE, // Use your email service
     auth: {
-      user: "", // Your email address
-      pass: "", // Your email password
+      user: process.env.ADMIN_EMAIL, // Your email address
+      pass: process.env.ADMIN_EMAIL_PASSWORD, // Your email password
     },
   });
 
   // Set up email data
   const mailOptions = {
     from: "",
-    to: "", // Recipient email address
+    to: "", // to Company email
     subject: "New Quote Request",
     text: `
       First Name: ${firstName}
@@ -34,8 +35,15 @@ const sendFormEmail = async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.status(200).send({ message: "Email sent successfully" });
   } catch (error) {
-    res.status(500).send({ message: "Error sending email" });
+    console.error("error sending email");
+
+    if (error instanceof CustomError) {
+      return next(error);
+    }
+    return next(
+      new CustomError(ERROR_MESSAGES.INVALID_DATA, ERROR_CODES.UNAUTHORIZED)
+    );
   }
 };
 
-module.exports = { sendFormEmail };
+module.exports = { sendQuoteEmail };

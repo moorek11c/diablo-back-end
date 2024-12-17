@@ -1,19 +1,15 @@
 const router = require("express").Router();
-const reviewsRouter = require("./reviews");
-const formRouter = require("./fileRoutes");
+const reviewsRoutes = require("./reviewsRoutes");
+const ImageUploads = require("./fileRoutes");
 const quoteForm = require("./formRoutes");
-const authRouter = require("./authRoutes");
-const authMiddleware = require("../middleware/authMiddleware");
+const adminRoutes = require("./adminRoutes");
 
-// Use the reviews router
-router.use("/reviews", reviewsRouter);
+router.use("/", adminRoutes);
 
-router.use("/images", formRouter);
+router.use("/reviews", reviewsRoutes);
 
-router.use("/", quoteForm);
+router.use("/images", ImageUploads);
 
-router.use("/auth", authRouter);
-
-router.use("/api/protected", authMiddleware, authRouter);
+router.use("/quote", quoteForm);
 
 module.exports = router;

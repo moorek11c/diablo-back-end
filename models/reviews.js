@@ -5,7 +5,7 @@ const reviewSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Name is required"],
-    minlength: [2, "Name must be at least 3 characters"],
+    minlength: [2, "Name must be at least 2 characters"],
     trim: true,
   },
   email: {

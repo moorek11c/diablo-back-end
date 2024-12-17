@@ -2,7 +2,9 @@ const jwt = require("jsonwebtoken");
 const { CustomError, ERROR_CODES, ERROR_MESSAGES } = require("../utils/errors");
 require("dotenv").config();
 
-const authMiddleware = async (req, res, next) => {
+const auth = async (req, res, next) => {
+  console.log("auth");
+
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith("Bearer")) {
@@ -26,4 +28,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+module.exports = auth;

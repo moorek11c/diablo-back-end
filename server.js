@@ -1,17 +1,14 @@
-/* eslint-disable no-console */
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const indexRouter = require("./routes/index");
+const indexRoutes = require("./routes/index");
 const {
   errorHandler,
   ERROR_CODES,
   ERROR_MESSAGES,
   CustomError,
 } = require("./utils/errors");
-
-// Create an Express app
 
 const app = express();
 
@@ -20,7 +17,6 @@ const corsOptions = {
   credentials: true,
 };
 
-// Connect to MongoDB
 mongoose
   .connect(process.env.DB_URL)
   .then(() => console.log("Connected to MongoDB"))
@@ -29,12 +25,16 @@ mongoose
     process.exit(1);
   });
 
-// Middleware for JSON parsing
 app.use(express.json());
 app.use(cors(corsOptions));
 
-// Routes
-app.use("/", indexRouter);
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
+
+app.use("/", indexRoutes);
 
 app.use((req, res, next) => {
   next(new CustomError(ERROR_MESSAGES.INVALID_ROUTER, ERROR_CODES.NOT_FOUND));
@@ -42,7 +42,6 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-// Start the server
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
