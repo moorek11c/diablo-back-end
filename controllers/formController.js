@@ -8,15 +8,15 @@ const sendFormEmail = async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail", // Use your email service
     auth: {
-      user: "moorek11c@gmail.com", // Your email address
-      pass: "vrxv hbgr mjlo vemg", // Your email password
+      user: "", // Your email address
+      pass: "", // Your email password
     },
   });
 
   // Set up email data
   const mailOptions = {
-    from: "moorek11c@gmail.com",
-    to: "moorek11c@gmail.com", // Recipient email address
+    from: "",
+    to: "", // Recipient email address
     subject: "New Quote Request",
     text: `
       First Name: ${firstName}
