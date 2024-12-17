@@ -1,25 +1,28 @@
 const jwt = require("jsonwebtoken");
+const { CustomError, ERROR_CODES, ERROR_MESSAGES } = require("../utils/errors");
 require("dotenv").config();
 
-const jwtSecret = process.env.JWT_SECRET;
-
 const authMiddleware = async (req, res, next) => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).send({ message: "No token provided" });
-    }
+  const { authorization } = req.headers;
 
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, jwtSecret, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({ message: "invalid Token" });
-      }
-      req.user = decoded;
-      next();
-    });
-  } catch (error) {
-    return res.status(401).send({ message: "Unauthorized" });
+  if (!authorization || !authorization.startsWith("Bearer")) {
+    throw new CustomError(
+      ERROR_MESSAGES.NOT_AUTHORIZED_LOGIIN,
+      ERROR_CODES.UNAUTHORIZED
+    );
+  }
+
+  const token = authorization.replace("Bearer ", "");
+
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return next();
+  } catch (err) {
+    console.error("Error in auth middleware:", err);
+    throw new CustomError(
+      ERROR_MESSAGES.NOT_AUTHORIZED_LOGIIN,
+      ERROR_CODES.UNAUTHORIZED
+    );
   }
 };
 

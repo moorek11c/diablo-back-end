@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const bcrypt = require("bcryptjs");
 
-const password = "diabloconstruction"; // Replace with your actual admin password
+const password = process.env.ADMIN_PASSWORD_HASH; // Replace with your actual admin password
 const saltRounds = 10;
 
 bcrypt.hash(password, saltRounds, (err, hash) => {

@@ -1,6 +1,6 @@
-import nodemailer from "nodemailer";
+const nodemailer = require("nodemailer");
 
-async function sendFormEmail(req, res) {
+const sendFormEmail = async (req, res) => {
   const { firstName, lastName, email, phoneNumber, city, state, details } =
     req.body;
 
@@ -36,6 +36,6 @@ async function sendFormEmail(req, res) {
   } catch (error) {
     res.status(500).send({ message: "Error sending email" });
   }
-}
+};
 
-export { sendFormEmail };
+module.exports = { sendFormEmail };

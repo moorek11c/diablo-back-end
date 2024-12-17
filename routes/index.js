@@ -10,9 +10,9 @@ router.use("/reviews", reviewsRouter);
 
 router.use("/images", formRouter);
 
-router.use("/api", quoteForm);
+router.use("/", quoteForm);
 
-router.use("/api/auth", authRouter);
+router.use("/auth", authRouter);
 
 router.use("/api/protected", authMiddleware, authRouter);
 

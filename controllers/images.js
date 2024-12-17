@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Image = require("../models/imageSchema");
 
-exports.uploadImage = async (req, res) => {
+const uploadImage = async (req, res) => {
   if (!req.file) {
     console.error("No file uploaded");
     return res.status(400).send({ message: "No file uploaded" });
@@ -26,7 +26,7 @@ exports.uploadImage = async (req, res) => {
   }
 };
 
-exports.getImageById = async (req, res) => {
+const getImageById = async (req, res) => {
   try {
     const imageId = new mongoose.Types.ObjectId(req.params.id);
     const image = await Image.findById(imageId);
@@ -42,7 +42,7 @@ exports.getImageById = async (req, res) => {
   }
 };
 
-exports.getAllImages = async (req, res) => {
+const getAllImages = async (req, res) => {
   try {
     const images = await Image.find({});
     res.send(images);
@@ -52,7 +52,7 @@ exports.getAllImages = async (req, res) => {
   }
 };
 
-exports.deleteImageById = async (req, res) => {
+const deleteImageById = async (req, res) => {
   try {
     const imageId = new mongoose.Types.ObjectId(req.params.id);
     const result = await Image.deleteOne({ _id: imageId });
@@ -65,3 +65,5 @@ exports.deleteImageById = async (req, res) => {
     res.status(500).send({ message: "Error deleting image" });
   }
 };
+
+module.exports = { uploadImage, getAllImages, getImageById, deleteImageById };
