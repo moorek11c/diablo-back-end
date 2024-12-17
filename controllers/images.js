@@ -14,7 +14,6 @@ const uploadImage = async (req, res) => {
 
   try {
     const savedImage = await newImage.save();
-    console.log("Image saved:", savedImage);
 
     res.send({
       message: "Image uploaded successfully",
