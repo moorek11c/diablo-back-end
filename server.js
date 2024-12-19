@@ -12,11 +12,6 @@ const {
 
 const app = express();
 
-const corsOptions = {
-  origin: "http://localhost:3000", // URL of the React app front end domain
-  credentials: true,
-};
-
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
@@ -26,13 +21,7 @@ mongoose
   });
 
 app.use(express.json());
-app.use(cors(corsOptions));
-
-app.get("/crash-test", () => {
-  setTimeout(() => {
-    throw new Error("Server will crash now");
-  }, 0);
-});
+app.use(cors());
 
 app.use("/", indexRoutes);
 

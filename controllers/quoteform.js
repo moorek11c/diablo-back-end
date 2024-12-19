@@ -16,8 +16,8 @@ const sendQuoteEmail = async (req, res, next) => {
 
   // Set up email data
   const mailOptions = {
-    from: "",
-    to: "", // to Company email
+    from: "diabloexcavation.com",
+    to: "info@diabloexcavation.com", // to Company email
     subject: "New Quote Request",
     text: `
       First Name: ${firstName}
