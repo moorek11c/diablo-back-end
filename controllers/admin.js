@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
       }
     );
 
-    res.send({ token });
+    res.json({ token });
   } catch (error) {
     console.error("login error", error);
     if (error instanceof CustomError) {

@@ -2,15 +2,17 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
+const app = express();
+
 const indexRoutes = require("./routes/index");
+
 const {
   errorHandler,
   ERROR_CODES,
   ERROR_MESSAGES,
   CustomError,
 } = require("./utils/errors");
-
-const app = express();
 
 mongoose
   .connect(process.env.MONGO_URI)
