@@ -4,7 +4,7 @@ const ImageUploads = require("./fileRoutes");
 const quoteForm = require("./formRoutes");
 const adminRoutes = require("./adminRoutes");
 
-router.use("/", adminRoutes);
+router.use("/api", adminRoutes);
 
 router.use("/reviews", reviewsRoutes);
 
