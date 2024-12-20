@@ -1,11 +1,9 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 const { CustomError } = require("../utils/errors");
 const { ERROR_CODES, ERROR_MESSAGES } = require("../utils/errors");
 const { JWT_SECRET } = require("../utils/config");
-const { log } = require("winston");
 
 const signup = async (req, res, next) => {
   const { username, email, password } = req.body;

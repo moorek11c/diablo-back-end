@@ -2,6 +2,6 @@ const router = require("express").Router;
 const imageController = require("../controllers/images");
 
 // Get all images route
-router.get("/images", imageController.getAllImages);
+router.post("/images", imageController.getAllImages);
 
 module.exports = router;
