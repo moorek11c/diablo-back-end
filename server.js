@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 
-const dbURL = process.env.DB_MONGO_URL;
+const dbURL = process.env.MONGO_URI;
 console.log("connecting to", dbURL);
 
 const mongoose = require("mongoose");
