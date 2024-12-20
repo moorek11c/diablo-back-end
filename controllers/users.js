@@ -5,6 +5,7 @@ const User = require("../models/users");
 const { CustomError } = require("../utils/errors");
 const { ERROR_CODES, ERROR_MESSAGES } = require("../utils/errors");
 const { JWT_SECRET } = require("../utils/config");
+const { log } = require("winston");
 
 const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -62,6 +63,7 @@ const signin = async (req, res, next) => {
     const user = await User.findUserByCredentials(email, password);
 
     const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "7d" });
+    console.log(user);
 
     // Include user data in the response
     return res.json({
@@ -73,7 +75,6 @@ const signin = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.error("Login error:", error);
     if (error instanceof CustomError) {
       return next(error);
     }

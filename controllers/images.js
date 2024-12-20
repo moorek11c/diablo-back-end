@@ -44,25 +44,11 @@ const getImageById = async (req, res) => {
 const getAllImages = async (req, res) => {
   try {
     const images = await Image.find({});
-    res.send(images);
+    res.json(images);
   } catch (err) {
     console.error("Error fetching images:", err);
     res.status(500).send({ message: "Error fetching images" });
   }
 };
 
-const deleteImageById = async (req, res) => {
-  try {
-    const imageId = new mongoose.Types.ObjectId(req.params.id);
-    const result = await Image.deleteOne({ _id: imageId });
-    if (result.deletedCount === 0) {
-      return res.status(404).send("Image not found");
-    }
-    res.send({ message: "Image deleted successfully" });
-  } catch (err) {
-    console.error("Error deleting image:", err);
-    res.status(500).send({ message: "Error deleting image" });
-  }
-};
-
-module.exports = { uploadImage, getAllImages, getImageById, deleteImageById };
+module.exports = { uploadImage, getAllImages };
