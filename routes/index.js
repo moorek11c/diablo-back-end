@@ -2,9 +2,9 @@ const router = require("express").Router();
 const reviewsRoutes = require("./reviewsRoutes");
 const ImageUploads = require("./fileRoutes");
 const quoteForm = require("./formRoutes");
-const adminRoutes = require("./adminRoutes");
+const userRoutes = require("./users");
 
-router.use("/api", adminRoutes);
+router.use("/", userRoutes);
 
 router.use("/reviews", reviewsRoutes);
 
