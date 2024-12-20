@@ -4,17 +4,21 @@ const { CustomError, ERROR_MESSAGES } = require("../utils/errors");
 require("dotenv").config();
 
 const adminUsername = process.env.ADMIN_USERNAME;
-const adminPassword = process.env.ADMIN_PASSWORD;
+const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 
 const login = async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
+    if (!username || !password) {
+      return res.status(400).send({ message: "Missing required fields" });
+    }
+
     if (username !== adminUsername) {
       return res.status(401).send({ message: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(password, adminPassword);
+    const isMatch = await bcrypt.compare(password, adminPasswordHash);
 
     if (!isMatch) {
       return res.status(401).send({ message: "Invalid credentials" });
